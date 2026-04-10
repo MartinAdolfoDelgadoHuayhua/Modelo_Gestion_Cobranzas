@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.env
+venv/
+.venv/
+
+# Outputs (generados al ejecutar)
+*.png
+resultados_scoring_cobranzas.csv
+kpis_segmento_estrategico.csv
+importancia_variables.csv
+
+# IDE
+.vscode/
+.idea/
+*.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
