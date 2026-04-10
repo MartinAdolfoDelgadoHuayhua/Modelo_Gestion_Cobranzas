@@ -1,13 +1,5 @@
 # 📊 Análisis de Recuperación de Cobranzas — PISE 9 Días
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://python.org)
-[![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3%2B-orange)](https://scikit-learn.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-
-Proyecto de Data Science orientado a la **optimización de la gestión de cobranzas** en cartera con 9 días de atraso (PISE 9). Incluye análisis exploratorio completo, modelado predictivo de propensión al pago, segmentación estratégica y recomendaciones accionables para equipos de cobranza.
-
----
-
 ## 🎯 Objetivo
 
 Desarrollar un pipeline analítico end-to-end que permita:
@@ -117,33 +109,6 @@ Datos de Cartera PISE 9
 | **D — Bajo Potencial** | Prob. 20%–40% | Email + SMS recordatorio |
 | **E — Recuperación Tardía** | Prob. < 20% | Negociación / Refinanciamiento |
 
----
-
-## 🚀 Cómo Ejecutar
-
-### 1. Clonar el repositorio
-
-```bash
-git clone https://github.com/tu-usuario/cobranzas-recuperacion-pise9.git
-cd cobranzas-recuperacion-pise9
-```
-
-### 2. Instalar dependencias
-
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Ejecutar el análisis
-
-```bash
-python recuperacion_cobranzas.py
-```
-
-El script genera automáticamente los 6 gráficos y los archivos CSV de salida en el directorio de trabajo.
-
----
-
 ## 📋 Variables del Dataset
 
 | Variable | Tipo | Descripción |
@@ -167,28 +132,64 @@ El script genera automáticamente los 6 gráficos y los archivos CSV de salida e
 | `prob_pago_pred` | float | Score de propensión (0–1) del modelo |
 | `segmento_estrategico` | cat | Segmento A–E asignado por modelo |
 
----
+## Resultados 
 
-## 💡 Extensiones Sugeridas
+HALLAZGOS CLAVE  
+────────────────
+  1. SCORE INTERNO → PREDICTOR MÁS PODEROSO
+     El score interno es la variable con mayor correlación con el pago
+     efectivo (corr=0.109). Clientes en decil 10 recuperan
+     62.0% vs 42.5% en decil 1. La brecha justifica
+     completamente una estrategia diferenciada por decil.
 
-- [ ] Integrar datos reales del core bancario vía SQL
-- [ ] Implementar SHAP values para explicabilidad por cliente
-- [ ] Agregar modelo de churn post-recuperación
-- [ ] Dashboard interactivo con Streamlit o Plotly Dash
-- [ ] Pipeline MLOps con MLflow para tracking de experimentos
-- [ ] Batch scoring automatizado con Airflow o Prefect
-- [ ] A/B testing framework para canales de contacto
+  2. CANAL APP MÓVIL → MAYOR EFECTIVIDAD
+     La App móvil y las llamadas superan ampliamente a SMS y email.
+     Invertir en auto-atención digital reduce costo operativo y aumenta
+     la tasa de recuperación simultáneamente.
 
----
+  3. CUMPLIMIENTO PTP → PALANCA CRÍTICA  
+     69.3% de quienes hacen "promise to pay" efectivamente pagan.
+     Elevar el cumplimiento PTP en 5pp impacta ~S/ 5.0M adicionales.
 
-## 📧 Contacto
+  4. CONCENTRACIÓN EN SEGMENTO A+B → 80/20
+     Los segmentos estratégicos A y B representan el 25% 
+     de la cartera recuperable. Focalizar el 70% de la fuerza de
+     gestión aquí maximiza el ROI de cobranza.
 
-Proyecto desarrollado por el equipo de **Data Science — Área de Riesgos y Cobranzas**.
+  5. COMPORTAMIENTO PREVIO → PREDICTOR HISTÓRICO ROBUSTO
+     Clientes sin mora anterior tienen 49.4% de tasa de pago.
+     Con mora anterior >60d, cae a 50.6%. Incluir la
+     variable "días_atraso_ant" es indispensable en cualquier modelo.
 
-Para consultas técnicas o contribuciones, abrir un issue en este repositorio.
+  6. MODELO GB → AUC 0.6477 — PRODUCCIÓN RECOMENDADA  
+     Gestionando solo el top 30% por score predicho se captura el
+     0% del monto recuperable. Ahorro de gestión en 70%
+     de la cartera de bajo potencial: redirigir a canales digitales
+     automáticos (SMS/email).
 
----
+RECOMENDACIONES ESTRATÉGICAS
+──────────────────────────────
+  ① Desplegar modelo Gradient Boosting en producción para puntuar cartera
+    diariamente (batch scoring). API REST con SLA < 200ms.
 
-## 📄 Licencia
+  ② Implementar reglas de enrutamiento automático por segmento:
+    - Seg. A → Ejecutivo senior con script personalizado + oferta de descuento.
+    - Seg. B → WhatsApp Business API con link de pago inmediato.
+    - Seg. C → SMS + recordatorio automático vía App.
+    - Seg. D/E → Email + estrategia de refinanciamiento proactivo.
 
-MIT License — ver archivo [LICENSE](LICENSE) para detalles.
+  ③ Calibrar modelo mensualmente con datos reales. Monitorear PSI
+    (Population Stability Index) para detectar drift en distribución
+    del score > 0.25 como alerta de reentrenamiento.
+
+  ④ Optimizar la ventana de contacto PISE 9 (días 1-9):
+    - Día 1-2 : Notificación automática (App + SMS). Costo mínimo.
+    - Día 3-5 : Activar WhatsApp/llamada para deudas > S/ 2,000.
+    - Día 6-7 : Oferta de regularización + condonación parcial intereses.
+    - Día 8-9 : Gestión intensiva antes del pase a PISE 30.
+
+  ⑤ A/B Testing continuo de mensajes, horarios y canales. Medir
+    incrementalidad real del contacto (grupo control sin gestión).
+
+  ⑥ Construir modelo de CLV ajustado por riesgo para priorizar
+    retención de clientes A/B recuperados como clientes activos.
