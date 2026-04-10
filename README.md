@@ -169,27 +169,28 @@ HALLAZGOS CLAVE
 
 RECOMENDACIONES ESTRATÉGICAS
 ──────────────────────────────
-  ① Desplegar modelo Gradient Boosting en producción para puntuar cartera
+
+1. Desplegar modelo Gradient Boosting en producción para puntuar cartera
     diariamente (batch scoring). API REST con SLA < 200ms.
 
-  ② Implementar reglas de enrutamiento automático por segmento:
+2. Implementar reglas de enrutamiento automático por segmento:
     - Seg. A → Ejecutivo senior con script personalizado + oferta de descuento.
     - Seg. B → WhatsApp Business API con link de pago inmediato.
     - Seg. C → SMS + recordatorio automático vía App.
     - Seg. D/E → Email + estrategia de refinanciamiento proactivo.
 
-  ③ Calibrar modelo mensualmente con datos reales. Monitorear PSI
+3. Calibrar modelo mensualmente con datos reales. Monitorear PSI
     (Population Stability Index) para detectar drift en distribución
     del score > 0.25 como alerta de reentrenamiento.
 
-  ④ Optimizar la ventana de contacto PISE 9 (días 1-9):
+4. Optimizar la ventana de contacto PISE 9 (días 1-9):
     - Día 1-2 : Notificación automática (App + SMS). Costo mínimo.
     - Día 3-5 : Activar WhatsApp/llamada para deudas > S/ 2,000.
     - Día 6-7 : Oferta de regularización + condonación parcial intereses.
     - Día 8-9 : Gestión intensiva antes del pase a PISE 30.
 
-  ⑤ A/B Testing continuo de mensajes, horarios y canales. Medir
+5.  A/B Testing continuo de mensajes, horarios y canales. Medir
     incrementalidad real del contacto (grupo control sin gestión).
 
-  ⑥ Construir modelo de CLV ajustado por riesgo para priorizar
+6. Construir modelo de CLV ajustado por riesgo para priorizar
     retención de clientes A/B recuperados como clientes activos.
